@@ -1,0 +1,76 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.*;
+import org.apache.commons.validator.routines.*;
+abstract class ValidateMail
+{
+	abstract boolean duplicateMailCheck(String mail);
+	
+	boolean validateMail(String mail)
+	{
+		EmailValidator validMail = EmailValidator.getInstance();
+		if(validMail.isValid(mail)) 
+		{
+			return true;
+		}
+		else
+		{
+			System.out.println("Invalid MailId"+"Enter a valid one");
+			return false;
+		}
+	}
+		
+}
+	
+
+public class MailClass extends ValidateMail 
+{
+	boolean duplicateMailCheck(String mail)
+	{
+		try
+		{
+			BufferedReader br = new BufferedReader(new FileReader("E:\\FullCreative\\Java Development\\Excercise2\\src\\UserDetails.txt"));
+			String s="  ";
+			while(s != ".")
+			{
+				s=br.readLine();
+				String data[] = new String[4];
+				data = s.split("  ");
+				if(mail.equals(data[1]))
+				{
+					return false;
+				}
+				
+			}
+		}
+		catch(Exception e)
+		{
+			
+		}
+		return true;
+	}
+	
+	String mail;
+	Scanner sc = new Scanner(System.in);
+	public String getMail()
+	{
+		boolean check,duplicate;
+		
+		System.out.println("Enter your mail Id : ");
+		mail = sc.next();
+		check = validateMail(mail);
+		
+		if( check ==false ) 
+		{
+			getMail();
+		}
+		duplicate = duplicateMailCheck(mail);
+		if(duplicate == false)
+		{
+			System.out.println("Mail Id already exist\tTry another one..");
+			getMail();
+		}
+		return mail;
+	}
+
+}

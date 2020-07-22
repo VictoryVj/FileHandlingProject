@@ -1,0 +1,149 @@
+import java.io.*;
+import java.util.*;
+
+class UserData
+{	
+	int count =0;
+	public static String mail,name,DOB,title;
+	UserData()
+	{
+		System.out.println("\nUser Details");
+	}
+	
+	void mySQL(String searchTitle)
+	{
+		
+		try
+		{
+			BufferedReader br = new BufferedReader(new FileReader("E:\\FullCreative\\Java Development\\Excercise2\\src\\UserDetails.txt"));
+			String s="  ";
+			System.out.println("SearchTitle: "+searchTitle);
+			while(s != ".")
+			{
+				s=br.readLine();
+				String data[] = new String[4];
+				data = s.split("  ");
+				//System.out.println("Sentance   : "+s);
+				//System.out.println("Title      : "+data[3]);
+				if(searchTitle.equals(data[3]))
+				{
+					System.out.println(s);
+				}
+				count++;
+			}
+		}
+		catch(Exception e)
+		{
+			
+		}
+	}
+	
+	void display()
+	{
+		System.out.println("\n\t\tTotal number of entries : "+count+"\n\n");
+	}
+	
+}
+
+public class UserInput extends UserData
+{
+
+	public static void main(String[] args) throws Exception
+	{
+		Scanner sc = new Scanner(System.in);
+		int i,repeat=0;
+		UserData ud = new UserData();
+		BirthDateClass bc = new BirthDateClass();
+		try
+		{
+			File f = new File("E:\\FullCreative\\Java Development\\FileHandling\\UserDetails.txt");
+			FileWriter fw = new FileWriter("E:\\FullCreative\\Java Development\\Excercise2\\src\\UserDetails.txt",true);
+			
+			if( f.createNewFile())
+			{
+				System.out.println("File Created : "+f.getName());
+			}
+			else
+			{
+				System.out.println("File already exists");
+			}
+			System.out.println("\t0 --> Another Response\n\t1 --> Search");
+			repeat = sc.nextInt();
+			while(repeat == 0 || repeat ==1)
+			{
+				if(repeat ==0)
+				{
+					name = bc.getName();
+					mail = bc.getMail();
+					DOB  = bc.getDOB();
+					title = bc.getDesignation();
+					fw.write(name+"  "+mail+"  "+DOB+"  "+title+"\n");
+				}
+				else if(repeat ==1)
+				{
+					System.out.println("\nEnter the title to get: ");
+					String searchTitle = sc.next();
+					ud.mySQL(searchTitle);
+				}
+				System.out.println("\t0 --> Another Response\n\t1 --> Search\n\t2 --> Quit");
+				repeat = sc.nextInt();
+				fw.flush();
+			}
+			
+			
+			fw.close();
+
+		}
+		
+		catch(IOException e)
+		{
+			System.out.println("An error occured");
+			e.printStackTrace();
+		}
+		
+		try
+		{
+			FileReader fr=new FileReader("E:\\FullCreative\\Java Development\\Excercise2\\src\\UserDetails.txt");
+			while((i=fr.read())!=-1)
+			{
+				System.out.print((char)i);
+			}    
+		        fr.close();
+		}
+		
+		catch(IOException e)
+		{
+			System.out.println("An error occured");
+			e.printStackTrace();
+		}
+		
+		System.out.println("\nReding text file using FileInputStream"); 
+		
+		try 
+		{ 
+			FileInputStream fis = new FileInputStream("E:\\FullCreative\\Java Development\\Excercise2\\src\\UserDetails"); 
+			int b = fis.read(); 
+			while(b != -1)
+			{ 
+				System.out.print(b); 
+				b = fis.read(); 
+			} 
+		} 
+
+		catch (FileNotFoundException ex) 
+		{ 
+			//Logger.getLogger(UserInput.class.getName()).log(Level.SEVERE, null, ex);
+			
+		}
+        
+		finally
+		{
+			System.out.println("File  Read and Write have done..\n\n");
+		}
+		ud.display();
+		
+		
+	}	
+	
+	
+}

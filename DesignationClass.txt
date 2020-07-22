@@ -1,0 +1,40 @@
+
+
+public class Designation extends NameClass 
+{
+	boolean validateDesignation(String designation)
+	{
+		if(designation == "Student" || designation == "Lecturer" || designation == "Lab-Incharge" || designation == "Manager")
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	
+	
+	
+	String designation;
+	boolean checkDesignation=true;
+	String getDesignation()
+	{
+		System.out.println("Student   Lecturer   Lab-Incharge   Manager");
+		System.out.println("\nEnter your designation: ");
+		designation = sc.next();
+		/*checkDesignation = validateDesignation(designation);
+		if(checkDesignation == false)
+		{
+			getDesignation();
+		}
+		else
+		{
+			return designation;
+		}*/
+		return designation;
+	}
+	
+
+}

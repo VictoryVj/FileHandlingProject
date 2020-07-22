@@ -1,0 +1,45 @@
+
+class InvalidUserName extends Exception
+{
+	InvalidUserName(String text)
+	{
+		super(text);	
+	}
+}
+
+
+public class NameClass extends MailClass 
+{
+	static void validateInput(String userName) throws InvalidUserName
+	{
+		int len = userName.length();
+		if(len < 3)
+		{
+			throw new InvalidUserName("UserName Invalid");
+		}
+		System.out.println("Valid Input");
+		
+	}
+	
+	String getName() throws InvalidUserName
+	{
+		String userName;
+		System.out.println("Enter your userName : ");
+		userName = sc.next();
+		
+		try
+		{
+			validateInput(userName);
+		}
+		
+		catch(InvalidUserName e)
+		 {
+			 System.out.println("Exception Caught - Invalid Exception");
+			 getName();
+		 }
+		return userName;
+		
+	}
+	
+
+}
